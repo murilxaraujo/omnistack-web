@@ -1,24 +1,37 @@
-import React from "react";
-import logo from "./logo.svg";
+import React, { useEffect, useState } from "react";
 import "./App.scss";
 
+import SideBar from "./components/sidebar/sidebar.component";
+import DevCard from "./components/dev-item/dev-item.component";
+import api from "./services/api";
+
 function App() {
+  const [devs, setDevs] = useState([]);
+  useEffect(() => {
+    async function loadDevs() {
+      const response = await api.get("/devs");
+      setDevs(response.data);
+    }
+
+    loadDevs();
+  });
+
+  const handleNewUser = user => {
+    setDevs([...devs, user]);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <aside>
+        <SideBar className="sidebar" handleNewUser={handleNewUser} />
+      </aside>
+      <main>
+        <ul>
+          {devs.map(({ _id, ...otherProps }) => (
+            <DevCard key={_id} {...otherProps} />
+          ))}
+        </ul>
+      </main>
     </div>
   );
 }
