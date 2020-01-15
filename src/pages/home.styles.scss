@@ -12,6 +12,7 @@ aside {
   padding: 30px 20px;
   margin: 0;
   box-sizing: border-box;
+  height: fit-content;
   @include responsive(1050px) {
     width: 100%;
   }
