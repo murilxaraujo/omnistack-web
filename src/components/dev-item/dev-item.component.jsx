@@ -13,7 +13,7 @@ const DevCard = ({ ...otherProps }) => {
           <span>{techs}</span>
         </div>
       </header>
-      <p>{bio}</p>
+      {bio ? <p>{bio}</p> : null}
       <a href={`http://github.com/${github_username}`}>
         Acessar perfil no github
       </a>
